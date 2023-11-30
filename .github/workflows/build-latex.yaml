@@ -11,7 +11,7 @@ jobs:
     - name: Setup repository
       uses: actions/checkout@v2
     - name: Install LaTeX's dependencies
-      run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super 
+      run: sudo apt-get update && sudo apt-get install texlive texlive-xelatex texlive-publishers texlive-science latexmk cm-super 
     - name: Compile with XeLaTeX + BibTeX
       # run: xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex; bibtex ${{ env.FILE }}; xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex;
       run: latexmk -xelatex -bibtex ${{ env.FILE }}
