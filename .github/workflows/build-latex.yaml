@@ -1,7 +1,9 @@
 env: 
   TEXFILE: codern-report
   BIBFILE: codern
-  OUTPUT_DIR: artifacts
+  OUTPUT_DIR: github_artifacts
+  DEPLOY_DIR: github_deploy
+  DEPLOY_BRANCH: build
 
 name: Build LaTeX document
 on: [push]
@@ -36,3 +38,22 @@ jobs:
       with:
         name: ${{ env.TEXFILE }}.pdf
         path: ./${{ env.OUTPUT_DIR }}
+
+  deploy:
+    needs: [build_latex]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          path: github_artifacts
+      - name: Move files
+        run: mkdir -p ${{ env.DEPLOY_DIR }} && mv ${{ env.OUTPUT_DIR }}/*/* ${{ env.DEPLOY_DIR  }}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.DEPLOY_TOKEN }}
+          publish_dir: ${{ env.DEPLOY_DIR }}
+          publish_branch: ${{ env.DEPLOY_BRANCH}}
+          force_orphan: true # Force orphan
