@@ -34,5 +34,5 @@ jobs:
     - name: Upload pdf as artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.OUTPUT_DIR }}/${{ env.TEXFILE }}.pdf
+        name: ${{ env.TEXFILE }}.pdf
         path: ./${{ env.OUTPUT_DIR }}
