@@ -1,5 +1,6 @@
 env: 
-  FILE: codern-report
+  TEXFILE: codern-report
+  BIBFILE: codern
   OUTPUT_DIR: artifacts
 
 name: Build LaTeX document
@@ -10,16 +11,22 @@ jobs:
     steps:
     - name: Setup repository
       uses: actions/checkout@v2
+    - name: List files
+      run: ls -R
     - name: Install LaTeX's dependencies
       run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science latexmk cm-super 
     - name: Compile with XeLaTeX + BibTeX
-      # run: xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex; bibtex ${{ env.FILE }}; xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex;
-      run: latexmk -xelatex -bibtex ${{ env.FILE }}
-      # run: pdflatex ${{ env.FILE }}; bibtex ${{ env.FILE }}; pdflatex ${{ env.FILE }}; pdflatex ${{ env.FILE }};
+      run: xelatex ${{ env.TEXFILE }}.tex; bibtex ${{ env.BIBFILE }}; xelatex ${{ env.TEXFILE }}.tex; xelatex ${{ env.TEXFILE }}.tex;
+      # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
+      # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
+    - name: List files
+      run: ls -R
     - name: Move pdf to artifacts
-      run: mkdir -p ${{ env.OUTPUT_DIR }} && mv ${{ env.FILE }}.pdf ${{ env.OUTPUT_DIR }}/${{ env.FILE }}.pdf
+      run: mkdir -p ${{ env.OUTPUT_DIR }} && mv ${{ env.TEXFILE }}.pdf ${{ env.OUTPUT_DIR }}/${{ env.TEXFILE }}.pdf
+    - name: List files
+      run: ls -R
     - name: Upload pdf as artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.OUTPUT_DIR }}/${{ env.FILE }}.pdf
+        name: ${{ env.OUTPUT_DIR }}/${{ env.TEXFILE }}.pdf
         path: ./${{ env.OUTPUT_DIR }}
