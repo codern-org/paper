@@ -13,8 +13,8 @@ jobs:
     - name: Install LaTeX's dependencies
       run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super 
     - name: Compile with XeLaTeX + BibTeX
-      run: xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex; bibtex ${{ env.FILE }}; xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex;
-      # run: latexmk -pdf -bibtex ${{ env.FILE }}
+      # run: xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex; bibtex ${{ env.FILE }}; xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex;
+      run: latexmk -xelatex -bibtex ${{ env.FILE }}
       # run: pdflatex ${{ env.FILE }}; bibtex ${{ env.FILE }}; pdflatex ${{ env.FILE }}; pdflatex ${{ env.FILE }};
     - name: Move pdf to artifacts
       run: mkdir -p ${{ env.OUTPUT_DIR }} && mv ${{ env.FILE }}.pdf ${{ env.OUTPUT_DIR }}/${{ env.FILE }}.pdf
