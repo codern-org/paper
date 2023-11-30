@@ -15,8 +15,14 @@ jobs:
       run: ls -R
     - name: Install LaTeX's dependencies
       run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science latexmk cm-super 
-    - name: Compile with XeLaTeX + BibTeX
-      run: xelatex ${{ env.TEXFILE }}.tex; bibtex ${{ env.BIBFILE }}; xelatex ${{ env.TEXFILE }}.tex; xelatex ${{ env.TEXFILE }}.tex;
+    - name: First compliation
+      continue-on-error: true
+      run: xelatex ${{ env.TEXFILE }}.tex; bibtex ${{ env.BIBFILE }};
+      # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
+      # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
+    - name: Second compliation
+      continue-on-error: true
+      run: xelatex ${{ env.TEXFILE }}.tex; xelatex ${{ env.TEXFILE }}.tex;
       # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
       # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
     - name: List files
