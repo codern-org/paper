@@ -1,6 +1,7 @@
 env: 
-  INPUT_NAME: codern-report
-  OUTPUT_NAME: codern-latex
+  FILE: codern-report
+  WORK_DIR: render
+  OUTPUT_DIR: artifacts
 
 name: Build LaTeX document
 on: [push]
@@ -8,17 +9,21 @@ jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v3
-      - name: Compile LaTeX document
-        uses: xu-cheng/latex-action@v3
-        with:
-          root_file: ${{ env.INPUT_NAME }}.tex
-          latexmk_use_xelatex: true
-          extra_fonts: |
-            ./fonts/*.ttf
-      - name: Upload PDF file
-        uses: actions/upload-artifact@v3
-        with:
-          name: PDF
-          path: ${{ env.OUTPUT_NAME }}.pdf
+    - name: Setup repository
+      uses: actions/checkout@v2
+    - name: Install LaTeX's dependencies
+      run: sudo apt-get update && sudo apt-get install texlive texlive-publishers texlive-science latexmk cm-super 
+    - name: Copy into working directory
+      run: mkdir -p ${{ env.WORK_DIR }} && cp -r ./* ${{ env.WORK_DIR }}
+    - name: Compile with XeLaTeX + BibTeX
+      working-directory: ${{ env.WORK_DIR }}
+      run: xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex; bibtex ${{ env.FILE }}; xelatex ${{ env.FILE }}.tex; xelatex ${{ env.FILE }}.tex;
+      # run: latexmk -pdf -bibtex ${{ env.FILE }}
+      # run: pdflatex ${{ env.FILE }}; bibtex ${{ env.FILE }}; pdflatex ${{ env.FILE }}; pdflatex ${{ env.FILE }};
+    - name: Move pdf to artifacts
+      run: mkdir -p ${{ env.OUTPUT_DIR }} && mv ${{ env.WORK_DIR }}/${{ env.FILE }}.pdf ${{ env.OUTPUT_DIR }}
+    - name: Upload pdf as artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.OUTPUT_DIR }}/${{ env.FILE }}.pdf
+        path: ./${{ env.OUTPUT_DIR }}
