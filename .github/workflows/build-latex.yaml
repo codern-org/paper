@@ -1,12 +1,21 @@
-env: 
-  TEXFILE: codern-report
-  BIBFILE: codern
-  OUTPUT_DIR: github_artifacts
-  DEPLOY_DIR: github_deploy
-  DEPLOY_BRANCH: build
 
 name: Build LaTeX document
-on: [workflow_dispatch]
+on: 
+  workflow_call:
+    inputs:
+      texfile:
+        description: The main LaTeX file to compile
+        type: string
+        required: true
+      bibfile:
+        description: The main BibTeX file to compile
+        type: string
+        required: true
+      output_dir:
+        description: The directory to store the artifacts
+        type: string
+        required: true
+
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -19,12 +28,12 @@ jobs:
       run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science latexmk cm-super 
     - name: First compliation
       continue-on-error: true
-      run: xelatex ${{ env.TEXFILE }}.tex; bibtex ${{ env.BIBFILE }};
+      run: xelatex ${{ env.TEXFILE }}; bibtex ${{ env.BIBFILE }};
       # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
       # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
     - name: Second compliation
       continue-on-error: true
-      run: xelatex ${{ env.TEXFILE }}.tex; xelatex ${{ env.TEXFILE }}.tex;
+      run: xelatex ${{ env.TEXFILE }}; xelatex ${{ env.TEXFILE }};
       # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
       # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
     - name: List files
@@ -38,26 +47,3 @@ jobs:
       with:
         name: ${{ env.TEXFILE }}.pdf
         path: ./${{ env.OUTPUT_DIR }}
-  deploy:
-    needs: [build_latex]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: List files
-        run: ls -R
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ./${{ env.OUTPUT_DIR }}
-      - name: List files
-        run: ls -R
-      - name: Move files
-        run: mkdir -p ${{ env.DEPLOY_DIR }} && mv ${{ env.OUTPUT_DIR }}/*/* ${{ env.DEPLOY_DIR  }}
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.DEPLOY_TOKEN }}
-          publish_dir: ${{ env.DEPLOY_DIR }}
-          publish_branch: ${{ env.DEPLOY_BRANCH}}
-          force_orphan: true # Force orphan

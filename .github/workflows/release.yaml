@@ -1,0 +1,69 @@
+env: 
+  TEXFILE: ./codern-report.tex
+  BIBFILE: ./bib/codern.bib
+  OUTPUT_DIR: github_artifacts
+  DEPLOY_DIR: github_deploy
+  DEPLOY_BRANCH: build
+
+name: Release LaTeX document
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        description: A version to release
+        type: string
+        required: true
+
+jobs:
+  build:
+    name: Build LaTeX document
+    uses: ./.github/workflows/build-latex.yaml
+    with:
+      texfile: ${{ env.TEXFILE }}
+      bibfile: ${{ env.BIBFILE }}
+      output_dir: ${{ env.OUTPUT_DIR }}
+
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: List files
+        run: ls -R
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ./${{ env.OUTPUT_DIR }}
+      - name: List files
+        run: ls -R
+      - name: Move files
+        run: mkdir -p ${{ env.DEPLOY_DIR }} && mv ${{ env.OUTPUT_DIR }}/*/* ${{ env.DEPLOY_DIR  }}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.DEPLOY_TOKEN }}
+          publish_dir: ${{ env.DEPLOY_DIR }}
+          publish_branch: ${{ env.DEPLOY_BRANCH}}
+          force_orphan: true
+  
+  release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: List files
+        run: ls -R
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: Release ${{ github.event.inputs.version }}
+          body: |
+            Release ${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
