@@ -23,9 +23,9 @@
 
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{cpe-grad}[2016/05/30 CPE,KMUTT latex class]
+\ProvidesClass{cpe-thesis-en}[2016/05/30 CPE KMUTT Thesis Template]
 \LoadClass{report}
-\typeout{Document Style `CPE thesis/report'.}
+\typeout{Document Style `CPE Thesis'.}
 \newcommand{\dotrule}[1]{% 
       \parbox[t]{#1}{\dotfill}} 
 
@@ -40,11 +40,6 @@
 \usepackage[no-math]{fontspec} %Font package
 \usepackage{xunicode,xltxtra}
 \usepackage{url}
-% April, 2022 by Thanin
-% Fix error when use \url with polyglossia in Thai. Url default font doesn't work in Thai environment.
-% Setting the style to be the same as Thai font solve the issue
-\urlstyle{same}
-
 \usepackage{hyperref}
 \hypersetup{
 	linktocpage,
@@ -52,6 +47,7 @@
 %    linktoc=all,     %set to all if you want both sections and subsections linked
     linkcolor=blue,  %choose some color if you want links to stand out
 }
+
 
 %%%% For using thaifonts
 %%% Comment out if using Polyglossia package
@@ -95,11 +91,6 @@
 \def\thaidisscoadvisortwo{} % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
 \def\thaidissdegree{}
 \def\thaidissyear{}
-
-\def\fnum@figure{รูปที่~\thefigure}
-\def\fnum@table{ตารางที่~\thetable}
-\renewcommand{\chaptername}{บทที่}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -193,7 +184,7 @@
 \def\@makechapterhead#1{%\vspace*{.8truein}%
 %  \fontsize{15}{18}{\centering{\bf \MakeUppercase{\@chapapp{}} \thechapter}\hskip 5\p@}%\vskip 20\p@
 %  \fontsize{15}{18}{\centering\MakeUppercase{\bf #1}\par\nobreak\emptyline 2}}
-  {\centering\MakeUppercase{\Large\bf \@chapapp{} \thechapter\hskip 5\p@ #1}\par\nobreak\vskip 30\p@ }}
+  {\centering\MakeUppercase{\large\bf \@chapapp{} \thechapter\hskip 5\p@ #1}\par\nobreak\vskip 30\p@ }}
 %\def\@makeschapterhead#1{\vspace*{.8truein}%
 %  {\centering{\large\bf #1}\par\nobreak\vskip 40\p@ }}
 
@@ -210,12 +201,12 @@
    \refstepcounter{chapter}%
    \typeout{\@chapapp\space\thechapter.}% 
 %% Put the work CHAPTER in ToC before the first chapter
-%%   \iffirstchapter
-%%       \addcontentsline{toc}{chapterxx}{\mdseries\bf บทที่}
-%%       \firstchapterfalse
-%%   \fi
+   \iffirstchapter
+       \addcontentsline{toc}{chapterxx}{\mdseries\bf CHAPTER}
+       \firstchapterfalse
+   \fi
 %% Add the chapter heading in ToC
-   \addcontentsline{toc}{chapter}{\normalsize\bf\MakeUppercase{บทที่ \tocprefix {\protect \numberline{\thechapter}\hskip -0.8em #1}}}
+   \addcontentsline{toc}{chapter}{\normalsize\bf\MakeUppercase{\tocprefix {\protect \numberline{\thechapter.}\hskip -0.5em #1}}}
    \chaptermark{#1}%
    %\addtocontents{lof} {\protect\addvspace{0\p@}}
    %\addtocontents{lot} {\protect\addvspace{0\p@}}
@@ -242,11 +233,11 @@
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
 				   {0.1ex\@plus.1ex} 
                                    %{2.3ex \@plus.2ex}%
-                                   {\normalfont\fontsize{12}{16.8}\bfseries}}
+                                   {\normalfont\fontsize{14}{16.8}\bfseries}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {0.1ex \@plus .2ex}%
-                                    {\normalfont\fontsize{11}{15.6}\bfseries}}
+                                    {\normalfont\fontsize{13}{15.6}\bfseries}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {0.1ex \@plus .2ex}%
@@ -337,11 +328,29 @@
     \endgroup \vskip -0.8em
   \fi}
 
+
+%\newlength\@chapterl
+%\newlength\@sectionl
+%\newlength\@subsectionl
+%\newlength\@subsubsectionl
+%\newlength\@presubs
+%\newlength\@presubsub
+%
+%\setlength\@chapterl{1.5em}
+%\setlength\@sectionl{1.5em}
+%\setlength\@subsectionl{1em}
+%\setlength\@subsubsectionl{1em}
+%
+%\setlength\@presubs{1\@sectionl}
+%\addtolength\@presubs{1\@chapterl}
+%\setlength\@presubsub{1\@presubs}
+%\addtolength\@presubsub{1\@subsectionl}
+
 %%% Section entries %%%%%%%%%%%%%%
 \def\l@section#1#2{\addpenalty{\@secpenalty}  % good place for page break
    %\addvspace{1.0em plus 1pt}  % space above toc entry
    \addvspace{0.2em}  % space above toc entry
-   \@tempdima 1.5em            % width of box holding section number
+   \@tempdima 2.2em     % width of box holding section number
    \begingroup
      \parindent \z@ \rightskip \@pnumwidth 
      \parfillskip -\@pnumwidth   
@@ -354,28 +363,11 @@
    \endgroup}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\let\l@subsection\l@section
+%%\let\l@subsection\l@section
+
 %% May 17, 2021
 %% Add indentation to subsection in table of contents 
 \def\l@subsection#1#2{ 
-   %\addvspace{1.0em plus 1pt}  % space above toc entry
-   \addvspace{0.2em}  % space above toc entry
-   \@tempdima 2em     % width of box holding section number
-   \begingroup
-     \parindent \z@ \rightskip \@pnumwidth 
-     \parfillskip -\@pnumwidth   
-     %\sc                  % Small caps
-     \leavevmode          % TeX command to enter horizontal mode.       
-      \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
-      \hskip -\leftskip            %% 25 Jan 88 change to \numberline
-      \hskip 2.5em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-   \endgroup}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%\let\l@subsubsection\l@section
-%% Nov 6, 2021
-%% Add indentation to subsubsection in table of contents 
-\def\l@subsubsection#1#2{ 
    %\addvspace{1.0em plus 1pt}  % space above toc entry
    \addvspace{0.2em}  % space above toc entry
    \@tempdima 3em     % width of box holding section number
@@ -386,7 +378,25 @@
      \leavevmode          % TeX command to enter horizontal mode.       
       \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
       \hskip -\leftskip            %% 25 Jan 88 change to \numberline
-      \hskip 4.5em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+      \hskip 3.2em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+   \endgroup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\let\l@subsubsection\l@section
+%% Nov 6, 2021
+%% Add indentation to subsubsection in table of contents 
+\def\l@subsubsection#1#2{ 
+   %\addvspace{1.0em plus 1pt}  % space above toc entry
+   \addvspace{0.2em}  % space above toc entry
+   \@tempdima 4em     % width of box holding section number
+   \begingroup
+     \parindent \z@ \rightskip \@pnumwidth 
+     \parfillskip -\@pnumwidth   
+     %\sc                  % Small caps
+     \leavevmode          % TeX command to enter horizontal mode.       
+      \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
+      \hskip -\leftskip            %% 25 Jan 88 change to \numberline
+      \hskip 6.2em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
    \endgroup}
    
 %%% Figure/table entries in list of figures and tables shows up
@@ -579,7 +589,7 @@ Credits & \disscredit \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\thaiabstract{
 \newpage
-\addcontentsline{toc}{chapterx}{\mdseries บทคัดย่อ}
+\addcontentsline{toc}{chapterx}{\mdseries THAI ABSTRACT}
 \begin{flushleft}
 \begin{tabular}{@{}lp{0.7\textwidth}}
  \textthai{หัวข้อ­}\thaiworktype & \thaidisstitleone\ \\ 
@@ -598,8 +608,8 @@ Credits & \disscredit \\
  \ifx \titleempty\disscoadvisor \else
      & \thaidisscoadvisor \\
 \fi
-\ifx \titleempty\disscoadvisortwo \else      % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
-& \thaidisscoadvisortwo \\
+ \ifx \titleempty\disscoadvisortwo \else      % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
+     & \thaidisscoadvisortwo \\
 \fi
  \textthai{หลักสูตร} & \thaidissdegree \\
  \textthai{สาขาวิชา} & \thaifieldofstudy \\
@@ -620,8 +630,8 @@ Credits & \disscredit \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%% Acknowledgement %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\preface{\chapter*{\large กิตติกรรมประกาศ}%
-\addcontentsline{toc}{chapterx}{\mdseries กิตติกรรมประกาศ}
+\def\preface{\chapter*{\large ACKNOWLEDGMENTS}%
+\addcontentsline{toc}{chapterx}{\mdseries ACKNOWLEDGMENTS}
 \thispagestyle{plain}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -629,13 +639,14 @@ Credits & \disscredit \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table of contents
 \setcounter{tocdepth}{5}  % must be same as secnumdepth
-\def\contentsname{สารบัญ}
+\def\contentsname{CONTENTS}
 \def\tableofcontents{\chapter*{\large\MakeUppercase{\contentsname}\@mkboth{}{}%
- \\ \emptyline 1 \hfill\textbf{หน้า}\\[-0.4em]}
+ \\ \emptyline 1 \hfill\textbf{PAGE}\\[-0.4em]}
 % 23 Nov 2021, Thanin
-% put \addcontentsline before \ssp\@starttoc to fix wrong numbering
-\addcontentsline{toc}{chapterx}{\mdseries สารบัญ}
-{\ssp\@starttoc{toc}}
+%put \addcontentsline before \ssp\@starttoc to fix wrong numbering
+ \addcontentsline{toc}{chapterx}{\mdseries CONTENTS}
+ {\ssp\@starttoc{toc}}
+ 
 \pagestyle{plain}\thispagestyle{plain}
 }
 
@@ -643,10 +654,10 @@ Credits & \disscredit \\
 %%%%%%%%%%%%%%%%%% List of table page %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % List of tables
-\def\listtablename{สารบัญตาราง}
-\def\listoftables{\chapter*{\large \MakeUppercase{\listtablename}\@mkboth{ตารางที่}{หน้า}\thispagestyle{plain}
-\\ \emptyline 1 \normalsize\textbf{ตารางที่}\hfill\textbf{หน้า}\\[-0.4em] }
-   \addcontentsline{toc}{chapterx}{\mdseries สารบัญตาราง} {\ssp\@starttoc{lot}}}
+\def\listtablename{LIST OF TABLES}
+\def\listoftables{\chapter*{\large \MakeUppercase{\listtablename}\@mkboth{TABLE}{PAGE}\thispagestyle{plain}
+\\ \emptyline 1 \normalsize\textbf{TABLE}\hfill\textbf{PAGE}\\[-0.4em] }
+   \addcontentsline{toc}{chapterx}{\mdseries LIST OF TABLES} {\ssp\@starttoc{lot}}}
 %\def\l@table{}
 %\def\l@table{\vskip 1.0em plus\p@\@dottedtocline{1}{1.5em}{2.3em}}
 
@@ -654,33 +665,33 @@ Credits & \disscredit \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% List of figure page %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\listfigurename{สารบัญรูปภาพ}
-\def\listoffigures{\chapter*{\large\MakeUppercase{\listfigurename}\@mkboth{รูปที่}{หน้า}\thispagestyle{plain}\\
+\def\listfigurename{LIST OF FIGURES}
+\def\listoffigures{\chapter*{\large\MakeUppercase{\listfigurename}\@mkboth{FIGURE}{PAGE}\thispagestyle{plain}\\
    \emptyline 1
-   \normalsize\textbf{รูปที่}\hfill\textbf{หน้า}\\[-0.4em]  }
-   \addcontentsline{toc}{chapterx}{\mdseries สารบัญรูปภาพ} {\ssp\@starttoc{lof}}}
+   \normalsize\textbf{FIGURE}\hfill\textbf{PAGE}\\[-0.4em]  }
+   \addcontentsline{toc}{chapterx}{\mdseries LIST OF FIGURES} {\ssp\@starttoc{lof}}}
 \let\l@figure\l@table
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% List of symbol page %%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\listofsymbols{\chapter*{\large สารบัญสัญลักษณ์}
+\def\listofsymbols{\chapter*{\large LIST OF SYMBOLS}
 %\\ \emptyline 1 \textbf{SYMBOL}\hfill\textbf{UNIT}\\[-1cm]}
-\addcontentsline{toc}{chapterx}{\mdseries สารบัญสัญลักษณ์}\thispagestyle{plain}
+\addcontentsline{toc}{chapterx}{\mdseries LIST OF SYMBOLS}\thispagestyle{plain}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% List of vocab page %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\listofvocab{\chapter*{\large สารบัญคำศัพท์ทางเทคนิคและคำย่อ}%
-\addcontentsline{toc}{chapterx}{\mdseries สารบัญคำศัพท์ทางเทคนิคและคำย่อ}\thispagestyle{plain}
+\def\listofvocab{\chapter*{\large LIST OF TECHNICAL VOCABULARY AND ABBREVATIONS}%
+\addcontentsline{toc}{chapterx}{\mdseries LIST OF TECHNICAL VOCABULARY AND ABBREVATIONS}\thispagestyle{plain}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% Appendix pages %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \firstappendixtrue
-\def\appendixnames{ภาคผนวก} % assume only one appendix
+\def\appendixnames{Appendix} % assume only one appendix
 \def\appendixcover#1{%
 \newpage\pagestyle{plain}\thispagestyle{empty}
 \iffirstappendix %
@@ -692,10 +703,10 @@ Credits & \disscredit \\
   \firstappendixfalse% 
 \fi 
    \setcounter{equation}{0} % Reset equation numbering
-   \setcounter{figure}{0} % Reset figure numbering (May 2022 by Thanin)
+   \setcounter{figure}{0}  % Reset figure numbering (May 2022 by Thanin)
    \addtocounter{chapter}{1}  % Start the 1st appendix 
-   {\centering{\vbox{}\vfill \MakeUppercase{\LARGE \bf
-    ภาคผนวก \thechapter} \par \bigskip \MakeUppercase{\Large #1} \vfill\vbox{}}}\newpage}
+   {\centering{\vbox{}\vfill \MakeUppercase{\bf
+    APPENDIX \thechapter} \par \MakeUppercase{#1} \vfill\vbox{}}}\newpage}
 %   {\centering{\vbox{}\vfill \MakeUppercase{{\normalsize\bf APPENDIX
 %\thechapter}} \par \MakeUppercase{#1}} \vfill\vbox{}}}\newpage}
 
@@ -707,7 +718,7 @@ Credits & \disscredit \\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%% Bibliography page %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\refname{บรรณานุกรม}
+\def\refname{REFERENCES}
 \def\referencepage{\chapter*{\large\bf \MakeUppercase{\refname} \\
 \emptyline 1}%
 \addcontentsline{toc}{chapter}{\mdseries\bf \MakeUppercase{\refname}}\thispagestyle{empty}

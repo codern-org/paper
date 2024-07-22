@@ -1,118 +1,123 @@
 
+%%%%%%%%%%%%%%%%%%%%%%%%%% DOC CLASS INFO %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%:     Filename = cpe-th-report.cls
+%:     Version = th-vectier-1.0
+%:     Original Authors:
+%:       - Peerapon Siripongwutikorn (peerapon@cpe.kmutt.ac.th), 2016-2020
+%:     Editing Authors:
+%:       - Thanin Srithai (thanin.srithai2@mail.kmutt.ac.th), 2021-2023
+%:       - Jatetanan Kanchanawat (jate@jate-koh.com), 2024
+%:       - Vectier (support@vectier.com), 2024
+%:
+%: This is a LaTeX class file for a project report and thesis at CPE, KMUTT.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     Filename = cpe-project.cls v1.0
-%     Data Jun 4, 2020
-%     Author   = Peerapon Siripongwutikorn (peerapon@cpe.kmutt.ac.th)
-% 
-% This is a LaTeX class file for project report and thesis at CPE,
-% KMUTT.
-% Date: May 25, 2016
+%: Instruction
+%: Your dissertation should be structured the following way:
+%: \maketitlepage, \makecopyrightpage, \makesignaturepage,
+%: \abstract{}, \preface{}, \tableofcontents, \listoftables, \listoffigures,
+%: \chapter{},....., \appendix{},.....,
+%: \thebibliography (or \bibliography{} with BiBTeX), \theindex
+%:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Edited
-% May 26, 2016
-% - Width of box holding section number too small. 
-% Old:    \@tempdima 2em        % width of box holding section number
-% New:    \@tempdima 3em
-% - Baseline skip 
-% Old: 
-% \def\baselineskipxii{24pt}
-%\def\baselineskipxi{18.6pt}  % for title and signature page
-% New:
-%\def\baselineskipxii{16pt}
-% \def\baselineskipxi{16pt}  % for title and signature page
-
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{cpe-grad}[2016/05/30 CPE,KMUTT latex class]
+\ProvidesClass{cpe-thesis-th}[2016/05/30 CPE KMUTT Thesis Template (Thai)]
 \LoadClass{report}
-\typeout{Document Style `CPE thesis/report'.}
+\typeout{Document Style `CPE Thesis'.}
 \newcommand{\dotrule}[1]{% 
       \parbox[t]{#1}{\dotfill}} 
 
+\usepackage{lmodern}
+\usepackage{listings}
 
-\usepackage[left=4cm,top=3cm,right=2cm,bottom=2cm]{geometry} 
-\usepackage{graphicx} %%% Use the option pdftex instead of
-                             %%% dvips if you use pdflatex 
+%: NOTE: Use the option pdftex instead of dvips if you use pdflatex 
+\usepackage[
+    left=4cm,
+    top=3cm,
+    right=2cm,
+    bottom=2cm
+]{geometry} 
+
+\usepackage{graphicx}
 \usepackage{array}
-\usepackage{amsfonts,amsmath} %% For math fonts and operations
-
+\usepackage{amsfonts,amsmath}
+\usepackage{markdown}
 \usepackage{mathspec}
-\usepackage[no-math]{fontspec} %Font package
+\usepackage[no-math]{fontspec} 
 \usepackage{xunicode,xltxtra}
+
+%: Fix error when use \url with polyglossia in Thai. 
+%: Url default font doesn't work in Thai environment.
+%: Setting the style to be the same as Thai font solve the issue
 \usepackage{url}
+\urlstyle{same}
 \usepackage{hyperref}
 \hypersetup{
-	linktocpage,
-    colorlinks=true, %set true if you want colored links
-%    linktoc=all,     %set to all if you want both sections and subsections linked
-    linkcolor=blue,  %choose some color if you want links to stand out
+    linktocpage,
+    colorlinks=true,    % Set true if you want colored links
+    % linktoc=all,        % Set to all if you want both sections & subsections linked
+    linkcolor=blue,     % Choose some color if you want links to stand out
 }
 
+\usepackage{cleveref}               % Clever referencing
 
-%%%% For using thaifonts
-%%% Comment out if using Polyglossia package
-%\newcommand{\textthai}[1]{{\fontspec[Language=Thai,Scale=1.23]{TH Sarabun New:script=thai}#1}}
+%: For using Thai fonts
+%: Make sure this is commented out if you're using the Polyglossia package
+% \newcommand{\textthai}[1]{{\fontspec[Language=Thai,Scale=1.23]{TH Sarabun New:script=thai}#1}}
 
+%%%%%%%%%%%%%%%%%%% Definitions of major strings %%%%%%%%%%%%%%%%%%%%
+\def\disstitleone{TITLE OF DISSERTATION}        % 1st line of TITLE of dissertation
+\def\disstitletwo{}                             % 2nd line of TITLE if needed
+\def\disstitlethree{}                           % 3rd line of TITLE if needed
+\def\disstitlefour{}                            % 4th line of TITLE if needed
+\def\dissauthor{Your Name 1}                    % Author of dissertation
+\def\dissauthortwo{Your friend's name 2 }       % Author of dissertation
+\def\dissauthorthree{Your friend's name 3}      % Author of dissertation
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%% Definitions of major strings %%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\disstitleone{TITLE OF DISSERTATION}      % 1st line of TITLE of dissertation
-\def\disstitletwo{}                           % 2nd line of TITLE if needed
-\def\disstitlethree{}                         % 3rd line of TITLE if needed
-\def\disstitlefour{}                          % 4th line of TITLE if needed
-\def\dissauthor{Your Name 1}              % Author of dissertation
-\def\dissauthortwo{Your friend's name 2 }              % Author of dissertation
-\def\dissauthorthree{Your friend's name 3}              % Author of dissertation
+%: List of diploma
+\def\dissdiplomaone{B.A., Carnegie Mellon University, 1991}
+\def\dissdiplomatwo{M.S., University of Pittsburgh, 1993}  
+\def\dissdiplomathree{}                        
+\def\dissdiplomafour{}
 
-\def\dissdiplomaone{B.A., Carnegie Mellon University, 1991} % first degree
-\def\dissdiplomatwo{M.S., University of Pittsburgh, 1993}   % second degree
-\def\dissdiplomathree{}                       % still in school?
-\def\dissdiplomafour{}                        % collecting them?
-\def\dissdegree{Doctor of Philosophy}         % Name of the degree
-\def\dissdegreeabrev{Ph.D.}                   % Abbreviation of the degree
-\def\dissyear{1995}                           % Year of submission
-\def\dissdefensedate{June 1 2000}             % Date of defense
-%\def\disscommitteechair{Prof. Francis Crick}  % Name of the Chairman
-\def\dissadvisor{Prof. My advisor }   % Advisor
-\def\disscoadvisor{My Co-advisor, Ph.D.}  % Co-advisor
-\def\disscoadvisortwo{}  % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
-\def\disscommitteetwo{Prof. Committee}   % 2rd committee member
-\def\disscommitteethree{}   % 3rd committee member
-\def\disscommitteefour{}                      % 4th committee member
+\def\dissdegree{Doctor of Philosophy}           % Name of the degree
+\def\dissdegreeabrev{Ph.D.}                     % Abbreviation of the degree
+\def\dissyear{1995}                             % Year of submission
+\def\dissdefensedate{June 1 2000}               % Date of defense
+\def\disscommitteechair{Prof. Francis Crick}    % Name of the Chairman
+\def\dissadvisor{Prof. My advisor }             % Advisor
+\def\disscoadvisor{My Co-advisor, Ph.D.}        % 1st Co-advisor
+\def\disscoadvisortwo{}                         % 2nd Co-advisor
+\def\disscommitteetwo{Prof. Committee}          % 2nd committee member
+\def\disscommitteethree{}                       % 3rd committee member
+\def\disscommitteefour{}                        % 4th committee member
 
 \def\thaiworktype{}
 \def\thaidisstitleone{}
 \def\thaidisstitletwo{}
+\def\thaidisstitlethree{}
+\def\thaidisstitlefour{}
 \def\thaidisauthor{}
 \def\thaidisauthortwo{}
 \def\thaidisauthorthree{}
 \def\thaidissadvisor{}
-\def\thaidisscoadvisortwo{} % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
+\def\thaidisscoadvisortwo{} 
 \def\thaidissdegree{}
 \def\thaidissyear{}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% 
-% Include the following line (uncommented) in your dissertation file
-% if your work has more than one appendix. This is what will be written on the 
-% cover page preceding the appendices.  By default, it is set to {Appendix}.
-% 
-% \def\appendixnames{Appendices}              % if more than one appendix
-% 
-% Your dissertation should be structured the following way:
-% \maketitlepage, \makecopyrightpage, \makesignaturepage,
-% \abstract{}, \preface{}, \tableofcontents, \listoftables, \listoffigures,
-% \chapter{},....., \appendix{},.....,
-% \thebibliography (or \bibliography{} with BiBTeX), \theindex
-% 
-% ************************************************************************
+\renewcommand{\chaptername}{บทที่}
+\def\fnum@figure{รูปที่~\thefigure}
+\def\fnum@table{ตารางที่~\thetable}
+\def\fnum@lstlisting{ชุดคำสั่งที่~\thelstlisting}
+\crefname{figure}{รูปที่}{รูปที่}
+\crefname{table}{ตารางที่}{ตารางที่}
+\crefrangeformat{figure}{รูปที่~#3#1#4 - #5#2#6}
+\crefrangeformat{table}{ตารางที่~#3#1#4 - #5#2#6}
 
-
-% **************************************************************************
-% Redefinition of some values
-% **************************************************************************
+%%%%%%%%%%%%%%%% Redefinition of some values %%%%%%%%%%%%%%%%%%%%%%%%
+% Modifications for single spacing and indentation, from Ethan V. Munson's 
+% style file for dissertations at the Univ of California
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\ssp{\def\baselinestretch{1.0}\large\normalsize}
 \def\dsp{\def\baselinestretch{1.37}\large\normalsize}
 %\def\dsp{\def\baselinestretch{1.1}\large\normalsize}
@@ -138,11 +143,10 @@
 \if@twoside\else\raggedbottom\fi
 \widowpenalty=10000 \clubpenalty=10000 \looseness=1
 
-% ***********************************************************************
-% Modifications for single spacing and indentation, from Ethan V. Munson's 
-% style file for dissertations at the Univ of California
-% ***********************************************************************
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Redefinition of main dissertation divisions, to comply with KMUTT 
+% regulations.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\smallssp{\def\baselinestretch{1.0}\large\small}
 \def\scriptsizessp{\def\baselinestretch{1.0}\large\scriptsize}
 %\def\tabular{\par\ssp\let\@halignto\@empty\@tabular}
@@ -167,27 +171,29 @@
      \addpenalty{\@secpenalty}\addvspace{\@tempskipa}\fi \@ifstar
      {\@ssect{#3}{#4}{#5}{#6}}{\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
 
-% ***********************************************************************
-% Redefinition of main dissertation divisions, to comply with KMUTT 
-% regulations.
-% ***********************************************************************
+%% Thai Numbering and Alphabets Sequences
+\def\thalph#1{\expandafter\@thalph\csname c@#1\endcsname}
+\def\@thalph#1{\ifcase#1\or ก\or ข\or ค\or ง\or จ\or ฉ\else\@ctrerr\fi}
+\def\thainum#1{\expandafter\@thainum\csname c@#1\endcsname}
+\def\@thainum#1{\ifcase#1\or ๑\or ๒\or ๓\or ๔\or ๕\or ๖\or ๗\or ๘\or ๙\else
+\@ctrerr\fi}
 
-%%%%%%%%%%%%%%%%%%%%%%%%% pagestyles %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% Definitions for page styling %%%%%%%%%%%%%%%%%%%%%%
 \def\ps@plain{\let\@mkboth\markboth\def\@oddfoot{}\def\@evenfoot{}
    \def\@oddhead{\hbox{}\hfil\rm\thepage} \def\@evenhead{\rm\thepage\hfil\hbox{}}}
 \def\ps@plainbottom{\let\@mkboth\markboth\def\@oddhead{}\def\@evenhead{}
    \def\@oddfoot{\hfil\rm\thepage\hfil} \def\@evenfoot{\hfil\rm\thepage\hfil}}
 \ps@plainbottom
 
-%%%%%%%%%%%%%%%%%%%%%%%%% Chapter font %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% Chapter heading in the text for \chapter{}
+%%%%%%%%%%%%%%%%%%%%%%%%% Chapter font %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Chapter heading in the text for \chapter{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\@makechapterhead#1{%\vspace*{.8truein}%
 %  \fontsize{15}{18}{\centering{\bf \MakeUppercase{\@chapapp{}} \thechapter}\hskip 5\p@}%\vskip 20\p@
 %  \fontsize{15}{18}{\centering\MakeUppercase{\bf #1}\par\nobreak\emptyline 2}}
-  {\centering\MakeUppercase{\large\bf \@chapapp{} \thechapter\hskip 5\p@ #1}\par\nobreak\vskip 30\p@ }}
+  {\centering\MakeUppercase{\Large\bf \@chapapp{} \thechapter\hskip 5\p@ #1}\par\nobreak\vskip 30\p@ }}
 %\def\@makeschapterhead#1{\vspace*{.8truein}%
 %  {\centering{\large\bf #1}\par\nobreak\vskip 40\p@ }}
-
 
 \def\chapter{\clearpage
 %   \ifprelude \pagestyle{plainbottom} \else 
@@ -199,25 +205,30 @@
 %   \pagestyle{plain}\thispagestyle{plainbottom} % added in v2.4
    \pagestyle{plain}\thispagestyle{empty} % No page number in chapter.
    \refstepcounter{chapter}%
-   \typeout{\@chapapp\space\thechapter.}% 
-%% Put the work CHAPTER in ToC before the first chapter
-   \iffirstchapter
-       \addcontentsline{toc}{chapterxx}{\mdseries\bf CHAPTER}
-       \firstchapterfalse
-   \fi
-%% Add the chapter heading in ToC
-   \addcontentsline{toc}{chapter}{\normalsize\bf\MakeUppercase{\tocprefix {\protect \numberline{\thechapter.}\hskip -0.5em #1}}}
+   \typeout{\@chapapp\space\thechapter.}
+
+% Put the work CHAPTER in ToC before the first chapter
+%   \iffirstchapter
+%       \addcontentsline{toc}{chapterxx}{\mdseries\bf บทที่}
+%       \firstchapterfalse
+%   \fi
+
+% Add the chapter heading in ToC
+   \addcontentsline{toc}{chapter}{\normalsize\bf\MakeUppercase{บทที่ \tocprefix {\protect \numberline{\thechapter}\hskip -0.8em #1}}}
    \chaptermark{#1}%
    %\addtocontents{lof} {\protect\addvspace{0\p@}}
    %\addtocontents{lot} {\protect\addvspace{0\p@}}
    \addtocontents{lof} {\protect\addvspace{0em}}
    \addtocontents{lot} {\protect\addvspace{0em}}
+   \addtocontents{lol} {\protect\addvspace{0em}}
    \pagestyle{plain}\thispagestyle{empty}
    % Must be added after addcontentsline 
    % Otherwise, the page number may not show up..
-   \@makechapterhead{#2} \@afterheading}
-%% Remove top space from \chapter*{}
-%% Chapter heading in the text for \chapter*{}
+   \@makechapterhead{#2} \@afterheading
+}
+
+% Remove top space from \chapter*{}
+% Chapter heading in the text for \chapter*{}
 \def\@makeschapterhead#1{%
   %\vspace*{50\p@}%
   {\parindent \z@ \centering%\raggedright
@@ -228,37 +239,46 @@
   }}
 \def\@schapter#1{\@makeschapterhead{#1} \@afterheading}
 
-%%%%%%%%%%%%%%% Section heading fonts %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Section heading fonts %%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand\section{\@startsection {section}{1}{\z@}%
-                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
-				   {0.1ex\@plus.1ex} 
-                                   %{2.3ex \@plus.2ex}%
-                                   {\normalfont\fontsize{14}{16.8}\bfseries}}
+                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                    {0.1ex\@plus.1ex} 
+                                    %{2.3ex \@plus.2ex}%
+                                    {\normalfont\fontsize{12}{16.8}\bfseries}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
-                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
-                                     {0.1ex \@plus .2ex}%
-                                    {\normalfont\fontsize{13}{15.6}\bfseries}}
+                                    {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                    {0.1ex \@plus .2ex}%
+                                    {\normalfont\fontsize{11}{15.6}\bfseries}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {0.1ex \@plus .2ex}%
                                      {\normalfont\normalsize\bfseries}}
+                                     
+%%%%%%%%%%%%%%%%%%%% Table & Figure Caption Font %%%%%%%%%%%%%%%%%%%%
+% \setlength\belowcaptionskip{10\p@}
+% \long\def\@maketablecaption#1#2{
+%     \global \@minipagefalse
+%     \hbox to \hsize{\parbox[t]{\hsize}{{\bf #1} #2 \vskip 0.5em}}}
+% \let\old@floatboxreset\@floatboxreset
+% \def\table{%
+% \let\@makecaption\@maketablecaption
+% %\def\@floatboxreset{%
+% % \old@floatboxreset
+% % \@tablesize
+% %}%
+%   \let\footnoterule\relax
+%   \let\contcaption\conttablecaption \@float{table}}
+% \def\endtable{\end@float}
 
-%%%%%%%%%%%%%%% Table/figure caption font %%%%%%%%%%%%%%%%%%%%%%%%
 \setlength\belowcaptionskip{10\p@}
-\long\def\@maketablecaption#1#2{
+\long\def\@maketablecaption#1#2{\@tablecaptionsize
+  \setbox\@tempboxa\hbox{#1. #2}
+  \ifdim \wd\@tempboxa >\hsize              % IF longer than one line THEN
+    \unhbox\@tempboxa\par                   %   set as justified paragraph
+  \else                                     % ELSE
     \global \@minipagefalse
-    \hbox to \hsize{\parbox[t]{\hsize}{{\bf #1} #2 \vskip 0.5em}}}
-\let\old@floatboxreset\@floatboxreset
-\def\table{%
-\let\@makecaption\@maketablecaption
-%\def\@floatboxreset{%
-% \old@floatboxreset
-% \@tablesize
-%}%
-  \let\footnoterule\relax
-  \let\contcaption\conttablecaption \@float{table}}
-\def\endtable{\end@float}
-
+    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%   center single line.
+  \fi}
 
 \long\def\@makecaption#1#2{%
   \vskip\abovecaptionskip
@@ -271,11 +291,11 @@
   \fi
   \vskip\belowcaptionskip}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%% Define how the content lines show up in ToC when using
-%%% addcontentsline{}{}{}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%% Normal chapter %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%% Content Line Definitions %%%%%%%%%%%%%%%%%%%%%%%%
+% Define how the content lines show up in ToC when using
+% addcontentsline{}{}{}
+
+%%%%%%% Normal chapter %%%%%%%%
 \renewcommand*\l@chapter[2]{%
   \ifnum \c@tocdepth >\m@ne
     \addpenalty{-\@highpenalty}%
@@ -293,6 +313,7 @@
     \endgroup
   \fi}
 
+%%%%%%% Special chapter %%%%%%%
 %% Special lines such as abstract, acknowledgment
 %% have no extra spacing between lines.
 \newcommand*\l@chapterx[2]{%
@@ -311,7 +332,7 @@
     \endgroup 
   \fi}
 
-%%% Special toc entry with no number
+%%%%%%% Special ToC entry with no number %%%%%%%%
 \newcommand*\l@chapterxx[2]{%
   \ifnum \c@tocdepth >\m@ne
     \addpenalty{-\@highpenalty}%
@@ -328,95 +349,82 @@
     \endgroup \vskip -0.8em
   \fi}
 
-
-%\newlength\@chapterl
-%\newlength\@sectionl
-%\newlength\@subsectionl
-%\newlength\@subsubsectionl
-%\newlength\@presubs
-%\newlength\@presubsub
-%
-%\setlength\@chapterl{1.5em}
-%\setlength\@sectionl{1.5em}
-%\setlength\@subsectionl{1em}
-%\setlength\@subsubsectionl{1em}
-%
-%\setlength\@presubs{1\@sectionl}
-%\addtolength\@presubs{1\@chapterl}
-%\setlength\@presubsub{1\@presubs}
-%\addtolength\@presubsub{1\@subsectionl}
-
-%%% Section entries %%%%%%%%%%%%%%
-\def\l@section#1#2{\addpenalty{\@secpenalty}  % good place for page break
-   %\addvspace{1.0em plus 1pt}  % space above toc entry
-   \addvspace{0.2em}  % space above toc entry
-   \@tempdima 2.2em     % width of box holding section number
+%%%%%%%%%% Section entries %%%%%%%%%%%%
+% Section content lines
+\def\l@section#1#2{\addpenalty{\@secpenalty}    % Page break
+   %\addvspace{1.0em plus 1pt}                  % Space above ToC entry
+   \addvspace{0.2em}                            % Space above ToC entry
+   \@tempdima 1.5em                             % Width of the box holding section number
    \begingroup
      \parindent \z@ \rightskip \@pnumwidth 
      \parfillskip -\@pnumwidth   
-     %\sc                  % Small caps
-     \leavevmode          % TeX command to enter horizontal mode.       
-      \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
-      \hskip -\leftskip            %% 25 Jan 88 change to \numberline
+     %\sc                                       % Small caps
+     \leavevmode                                % TeX command to enter horizontal mode    
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
       \hskip 1em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
      %\hskip 2em #1\nobreak\hfil \nobreak\hbox to\@pnumwidth{\hss #2}\par
    \endgroup}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%\let\l@subsection\l@section
-
-%% May 17, 2021
+% Subsection content lines
+%\let\l@subsection\l@section
 %% Add indentation to subsection in table of contents 
 \def\l@subsection#1#2{ 
-   %\addvspace{1.0em plus 1pt}  % space above toc entry
-   \addvspace{0.2em}  % space above toc entry
-   \@tempdima 3em     % width of box holding section number
+   %\addvspace{1.0em plus 1pt}                  % Space above ToC entry
+   \addvspace{0.2em}                            % Space above ToC entry
+   \@tempdima 2em                               % Width of the box holding section number
    \begingroup
      \parindent \z@ \rightskip \@pnumwidth 
      \parfillskip -\@pnumwidth   
-     %\sc                  % Small caps
-     \leavevmode          % TeX command to enter horizontal mode.       
-      \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
-      \hskip -\leftskip            %% 25 Jan 88 change to \numberline
-      \hskip 3.2em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+     %\sc                                       % Small caps
+     \leavevmode                                % TeX command to enter horizontal mode
+      \advance\leftskip\@tempdima               % Added 5 Feb 88 to conform to 
+      \hskip -\leftskip                         % 25 Jan 88 change to \numberline
+      \hskip 2.5em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
    \endgroup}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% Subsubsection content lines
 %%\let\l@subsubsection\l@section
-%% Nov 6, 2021
 %% Add indentation to subsubsection in table of contents 
 \def\l@subsubsection#1#2{ 
-   %\addvspace{1.0em plus 1pt}  % space above toc entry
-   \addvspace{0.2em}  % space above toc entry
-   \@tempdima 4em     % width of box holding section number
+   %\addvspace{1.0em plus 1pt}                  % Space above ToC entry
+   \addvspace{0.2em}                            % Space above ToC entry
+   \@tempdima 3em                               % Width of the box holding section number
    \begingroup
      \parindent \z@ \rightskip \@pnumwidth 
      \parfillskip -\@pnumwidth   
-     %\sc                  % Small caps
-     \leavevmode          % TeX command to enter horizontal mode.       
-      \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
-      \hskip -\leftskip            %% 25 Jan 88 change to \numberline
-      \hskip 6.2em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+     %\sc                                       % Small caps
+     \leavevmode                                % TeX command to enter horizontal mode
+      \advance\leftskip\@tempdima               % Added 5 Feb 88 to conform to 
+      \hskip -\leftskip                         % 25 Jan 88 change to \numberline
+      \hskip 4.5em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
    \endgroup}
    
-%%% Figure/table entries in list of figures and tables shows up
-\def\l@figure#1#2{\addpenalty{\@secpenalty}  % good place for page break
-   %\addvspace{1.0em plus 1pt}  % space above toc entry
-  \addvspace{0.2em}  % space above toc entry
-   \@tempdima 2em            % width of box holding section number
-   \begingroup
-     \parindent \z@ \rightskip \@pnumwidth 
-     \parfillskip -\@pnumwidth   
-     %\sc                  % Small caps
-     \leavevmode          % TeX command to enter horizontal mode.       
-      \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
-      \hskip -\leftskip            %% 25 Jan 88 change to \numberline
-      \hskip 0em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-     %\hskip 2em #1\nobreak\hfil \nobreak\hbox to\@pnumwidth{\hss #2}\par
-   \endgroup}
+% Figure content lines
+\def\l@figure#1#2{
+    \addpenalty{\@secpenalty}                   % Page break
+    %\addvspace{1.0em plus 1pt}                 % Space above ToC entry
+    \addvspace{0.2em}                           % Space above ToC entry
+    \@tempdima 2em                              % Width of the box holding section number
+    \begingroup
+        \parindent \z@ \rightskip \@pnumwidth 
+        \parfillskip -\@pnumwidth   
+        %\sc                                    % Small caps
+        \leavevmode                             % TeX command to enter horizontal mode
+        \advance\leftskip\@tempdima             % Added 5 Feb 88 to conform to 
+        \hskip -\leftskip                       % 25 Jan 88 change to \numberline
+        \hskip 0em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+        %\hskip 2em #1\nobreak\hfil \nobreak\hbox to\@pnumwidth{\hss #2}\par
+   \endgroup
+}
+
+% Table content lines
 \let\l@table\l@figure
 
-%%% Appendix content lines
+% Code content lines
+\let\l@lstlisting\l@figure
+
+% Appendix content lines
 \def\l@apdx#1#2{\addpenalty{\@secpenalty}  % good place for page break
    \addvspace{0.2em}  % space above toc entry
    \@tempdima 2em            % width of box holding section number
@@ -428,10 +436,9 @@
       \advance\leftskip\@tempdima  %% added 5 Feb 88 to conform to 
       \hskip -\leftskip            %% 25 Jan 88 change to \numberline
       \hskip 2em #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
-   \endgroup}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%% Title page %%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+   \endgroup
+}
+%%%%%%%%%%%%%%%%%%%%%%%%% Title page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\faculty{}
 \def\worktype{}  % Type of work..
 \def\titleempty{}
@@ -441,6 +448,13 @@
    \ifx \titleempty\disstitletwo \else  
    \makebox{\MakeUppercase{\disstitletwo}} \par
    \fi
+   \ifx \titleempty\disstitlethree \else
+   \makebox{\MakeUppercase{\disstitlethree}} \par
+   \fi 
+   \ifx \titleempty\disstitlefour \else
+   \makebox{\MakeUppercase{\disstitlefour}} \par
+   \fi
+   
    \vfill \MakeUppercase{\dissauthor} \par 
    
    \ifx \titleempty\dissauthortwo \else  
@@ -462,15 +476,12 @@
    KING MONGKUT'S UNIVERSITY OF TECHNOLOGY THONBURI \par 
    \dissyear \vspace*{2cm}\par}
    \newpage\baselineskip \truebaselineskip}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Copyright page %%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%% Copyright page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\makecopyrightpage{\newpage
    {\centering{\vbox{}\vfill Copyright by \dissauthor\par\dissyear\par \vfill\vbox{}}}\newpage}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%% Signature page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% Signature page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\def\thesis{Thesis}
 \def\makesignaturepage{
    \newpage\thispagestyle{empty}\baselineskip \baselineskipxi {\centering
@@ -478,8 +489,13 @@
    \ifx \titleempty\disstitletwo \else  
    \makebox{\disstitletwo} \par
    \fi
-   %\makebox {\disstitletwo} \par
-   %\makebox {\disstitlethree} \par \makebox {\disstitlefour} \par
+   \ifx \titleempty\disstitlethree \else
+   \makebox {\disstitlethree} \par 
+   \fi
+   \ifx \titleempty\disstitlefour \else
+   \makebox {\disstitlefour} \par
+   \fi
+   
    \vfill \dissauthor\ \par 
    \ifx \titleempty\dissauthortwo \else  
    \makebox{\dissauthortwo} \par
@@ -540,9 +556,7 @@
 \end{center}	
 \newpage\baselineskip \truebaselineskip}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%% English Abstract %%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% English abstract %%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\abstract{
 \newpage
 \setcounter{page}{2}
@@ -553,6 +567,12 @@
  \worktype\ Title & \disstitleone\ \\ 
 \ifx \titleempty\disstitletwo \else
               & \disstitletwo \\
+\fi
+\ifx \titleempty\disstitlethree \else
+              & \disstitlethree \\
+\fi
+\ifx \titleempty\disstitlefour \else
+              & \disstitlefour \\
 \fi
 Credits & \disscredit \\
  Member(s) & \dissauthor \\
@@ -584,17 +604,21 @@ Credits & \disscredit \\
 \par
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%% Thai Abstract %%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%% Thai Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\thaiabstract{
 \newpage
-\addcontentsline{toc}{chapterx}{\mdseries THAI ABSTRACT}
+\addcontentsline{toc}{chapterx}{\mdseries บทคัดย่อ}
 \begin{flushleft}
 \begin{tabular}{@{}lp{0.7\textwidth}}
  \textthai{หัวข้อ­}\thaiworktype & \thaidisstitleone\ \\ 
 \ifx \titleempty\thaidisstitletwo \else
               & \thaidisstitletwo \\
+\fi
+\ifx \titleempty\thaidisstitlethree \else
+              & \thaidisstitlethree \\
+\fi
+\ifx \titleempty\thaidisstitlefour \else
+              & \thaidisstitlefour \\
 \fi
  \textthai{หน่วยกิต} & \textthai{\disscredit} \\
  \textthai{ผู้เขียน} & \thaidissauthor \\
@@ -608,8 +632,8 @@ Credits & \disscredit \\
  \ifx \titleempty\disscoadvisor \else
      & \thaidisscoadvisor \\
 \fi
- \ifx \titleempty\disscoadvisortwo \else      % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
-     & \thaidisscoadvisortwo \\
+\ifx \titleempty\disscoadvisortwo \else      % Co-advisor 2, Added by Thanin (Senior Project TA) 22/11/2023
+& \thaidisscoadvisortwo \\
 \fi
  \textthai{หลักสูตร} & \thaidissdegree \\
  \textthai{สาขาวิชา} & \thaifieldofstudy \\
@@ -626,72 +650,66 @@ Credits & \disscredit \\
 \par
 }
 \def\endabstract{\newpage}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%% Acknowledgement %%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\preface{\chapter*{\large ACKNOWLEDGMENTS}%
-\addcontentsline{toc}{chapterx}{\mdseries ACKNOWLEDGMENTS}
+%%%%%%%%%%%%%%%%%%%%%%%% Acknowledgement %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\preface{\chapter*{\large กิตติกรรมประกาศ}%
+\addcontentsline{toc}{chapterx}{\mdseries กิตติกรรมประกาศ}
 \thispagestyle{plain}
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%% Content page %%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Content page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Table of contents
 \setcounter{tocdepth}{5}  % must be same as secnumdepth
-\def\contentsname{CONTENTS}
+\def\contentsname{สารบัญ}
 \def\tableofcontents{\chapter*{\large\MakeUppercase{\contentsname}\@mkboth{}{}%
- \\ \emptyline 1 \hfill\textbf{PAGE}\\[-0.4em]}
+ \\ \emptyline 1 \hfill\textbf{หน้า}\\[-0.4em]}
 % 23 Nov 2021, Thanin
-%put \addcontentsline before \ssp\@starttoc to fix wrong numbering
- \addcontentsline{toc}{chapterx}{\mdseries CONTENTS}
- {\ssp\@starttoc{toc}}
- 
+% put \addcontentsline before \ssp\@starttoc to fix wrong numbering
+\addcontentsline{toc}{chapterx}{\mdseries สารบัญ}
+{\ssp\@starttoc{toc}}
 \pagestyle{plain}\thispagestyle{plain}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%% List of table page %%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% List of table page %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % List of tables
-\def\listtablename{LIST OF TABLES}
-\def\listoftables{\chapter*{\large \MakeUppercase{\listtablename}\@mkboth{TABLE}{PAGE}\thispagestyle{plain}
-\\ \emptyline 1 \normalsize\textbf{TABLE}\hfill\textbf{PAGE}\\[-0.4em] }
-   \addcontentsline{toc}{chapterx}{\mdseries LIST OF TABLES} {\ssp\@starttoc{lot}}}
+\def\listtablename{สารบัญตาราง}
+\def\listoftables{\chapter*{\large \MakeUppercase{\listtablename}\@mkboth{ตารางที่}{หน้า}\thispagestyle{plain}
+\\ \emptyline 1 \normalsize\textbf{ตารางที่}\hfill\textbf{หน้า}\\[-0.4em] }
+   \addcontentsline{toc}{chapterx}{\mdseries สารบัญตาราง} {\ssp\@starttoc{lot}}}
 %\def\l@table{}
 %\def\l@table{\vskip 1.0em plus\p@\@dottedtocline{1}{1.5em}{2.3em}}
 
+%%%%%%%%%%%%%%%%%%%%% List of figure page %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% List of figure page %%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\listfigurename{LIST OF FIGURES}
-\def\listoffigures{\chapter*{\large\MakeUppercase{\listfigurename}\@mkboth{FIGURE}{PAGE}\thispagestyle{plain}\\
+\def\listfigurename{สารบัญรูปภาพ}
+\def\listoffigures{\chapter*{\large\MakeUppercase{\listfigurename}\@mkboth{รูปที่}{หน้า}\thispagestyle{plain}\\
    \emptyline 1
-   \normalsize\textbf{FIGURE}\hfill\textbf{PAGE}\\[-0.4em]  }
-   \addcontentsline{toc}{chapterx}{\mdseries LIST OF FIGURES} {\ssp\@starttoc{lof}}}
+   \normalsize\textbf{รูปที่}\hfill\textbf{หน้า}\\[-0.4em]  }
+   \addcontentsline{toc}{chapterx}{\mdseries สารบัญรูปภาพ} {\ssp\@starttoc{lof}}}
 \let\l@figure\l@table
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% List of symbol page %%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\listofsymbols{\chapter*{\large LIST OF SYMBOLS}
+%%%%%%%%%%%%%%%%%%%%% List of symbol page %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\listofsymbols{\chapter*{\large สารบัญสัญลักษณ์}
 %\\ \emptyline 1 \textbf{SYMBOL}\hfill\textbf{UNIT}\\[-1cm]}
-\addcontentsline{toc}{chapterx}{\mdseries LIST OF SYMBOLS}\thispagestyle{plain}
+\addcontentsline{toc}{chapterx}{\mdseries สารบัญสัญลักษณ์}\thispagestyle{plain}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% List of vocab page %%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\listofvocab{\chapter*{\large LIST OF TECHNICAL VOCABULARY AND ABBREVATIONS}%
-\addcontentsline{toc}{chapterx}{\mdseries LIST OF TECHNICAL VOCABULARY AND ABBREVATIONS}\thispagestyle{plain}
+%%%%%%%%%%%%%%%%%%%%% List of vocab page %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\listofvocab{\chapter*{\large สารบัญคำศัพท์ทางเทคนิคและคำย่อ}%
+\addcontentsline{toc}{chapterx}{\mdseries สารบัญคำศัพท์ทางเทคนิคและคำย่อ}\thispagestyle{plain}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% Appendix pages %%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%% List of codes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\listofprogramname{สารบัญซอร์สโค้ดโปรแกรม}
+\def\listofprograms{\chapter*{\large\MakeUppercase{\listofprogramname}\@mkboth{ชุดคำสั่งที่}{หน้า}\thispagestyle{plain}\\
+   \emptyline 1
+   \normalsize\textbf{ขุดคำสั่งที่}\hfill\textbf{หน้า}\\[-0.4em]  }
+   \addcontentsline{toc}{chapterx}{\mdseries สารบัญชุดคำสั่งคอมพิวเตอร์} {\ssp\@starttoc{lol}}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%% Appendix pages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \firstappendixtrue
-\def\appendixnames{Appendix} % assume only one appendix
+\def\appendixnames{ภาคผนวก} % assume only one appendix
 \def\appendixcover#1{%
 \newpage\pagestyle{plain}\thispagestyle{empty}
 \iffirstappendix %
@@ -703,10 +721,10 @@ Credits & \disscredit \\
   \firstappendixfalse% 
 \fi 
    \setcounter{equation}{0} % Reset equation numbering
-   \setcounter{figure}{0}  % Reset figure numbering (May 2022 by Thanin)
+   \setcounter{figure}{0} % Reset figure numbering (May 2022 by Thanin)
    \addtocounter{chapter}{1}  % Start the 1st appendix 
-   {\centering{\vbox{}\vfill \MakeUppercase{\bf
-    APPENDIX \thechapter} \par \MakeUppercase{#1} \vfill\vbox{}}}\newpage}
+   {\centering{\vbox{}\vfill \MakeUppercase{\LARGE \bf
+    ภาคผนวก \thechapter} \par \bigskip \MakeUppercase{\Large #1} \vfill\vbox{}}}\newpage}
 %   {\centering{\vbox{}\vfill \MakeUppercase{{\normalsize\bf APPENDIX
 %\thechapter}} \par \MakeUppercase{#1}} \vfill\vbox{}}}\newpage}
 
@@ -715,10 +733,8 @@ Credits & \disscredit \\
 \addcontentsline{toc}{apdx}{\thechapter\hskip 1em #1}%
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%% Bibliography page %%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\def\refname{REFERENCES}
+%%%%%%%%%%%%%%%%%%%%%%%% Bibliography page %%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\refname{บรรณานุกรม}
 \def\referencepage{\chapter*{\large\bf \MakeUppercase{\refname} \\
 \emptyline 1}%
 \addcontentsline{toc}{chapter}{\mdseries\bf \MakeUppercase{\refname}}\thispagestyle{empty}
@@ -742,9 +758,8 @@ Credits & \disscredit \\
 \def\endthebibliography{\ifdraftmode \dsp \fi
   \def\@noitemerr{\@warning{Empty `thebibliography' environment}} \endlist}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Vitae %%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Vitae %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \def\vitae{
 \clearpage
 \chapter*{\large\bf CURRICULUM VITAE}%
@@ -753,8 +768,7 @@ Credits & \disscredit \\
 \pagestyle{plain}\thispagestyle{plain}
 }
 
-% ************************************************************
-% personal stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %\input latexsym.sty
 \usepackage{latexsym}
@@ -770,6 +784,5 @@ Credits & \disscredit \\
    \par\noindent{\bfseries Proof: }\ignorespaces}
    { $\Box$\par\hbox{}\par}
 
-% *******************************************************************
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \endinput
-
