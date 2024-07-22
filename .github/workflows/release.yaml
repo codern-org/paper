@@ -1,9 +1,9 @@
 env: 
-  TEXFILE: ./codern-report.tex
-  BIBFILE: ./bib/codern.bib
-  OUTPUT_DIR: github_artifacts
-  DEPLOY_DIR: github_deploy
-  DEPLOY_BRANCH: build
+  TEXFILE: './codern-report.tex'
+  BIBFILE: './bib/codern.bib'
+  OUTPUT_DIR: 'github_artifacts'
+  DEPLOY_DIR: 'github_deploy'
+  DEPLOY_BRANCH: 'build'
 
 name: Release LaTeX document
 on: 
