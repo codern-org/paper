@@ -28,18 +28,18 @@ jobs:
       run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science latexmk cm-super 
     - name: First compliation
       continue-on-error: true
-      run: xelatex ${{ env.TEXFILE }}; bibtex ${{ env.BIBFILE }};
+      run: xelatex ${{ github.event.inputs.texfile }}.tex; bibtex ${{ github.event.inputs.bibfile }}.bib;
       # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
       # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
     - name: Second compliation
       continue-on-error: true
-      run: xelatex ${{ env.TEXFILE }}; xelatex ${{ env.TEXFILE }};
+      run: xelatex ${{ github.event.inputs.texfile }}.tex; xelatex ${{ github.event.inputs.texfile }}.tex;
       # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
       # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
     - name: List files
       run: ls -R
     - name: Move pdf to artifacts
-      run: mkdir -p ${{ env.OUTPUT_DIR }} && mv ${{ env.TEXFILE }}.pdf ${{ env.OUTPUT_DIR }}/${{ env.TEXFILE }}.pdf
+      run: mkdir -p ${{ github.event.inputs.output_dir }} && mv ${{ github.event.inputs.texfile }}.pdf ${{ github.event.inputs.output_dir }}/${{ github.event.inputs.texfile }}.pdf
     - name: List files
       run: ls -R
     - name: Upload pdf as artifact

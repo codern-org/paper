@@ -1,6 +1,7 @@
+# Don't use file surnames in the workflow file names.
 env: 
-  TEXFILE: './codern-report.tex'
-  BIBFILE: './bib/codern.bib'
+  TEXFILE: './codern-report'
+  BIBFILE: './bib/codern'
   OUTPUT_DIR: 'github_artifacts'
   DEPLOY_DIR: 'github_deploy'
   DEPLOY_BRANCH: 'build'
