@@ -21,17 +21,11 @@ env:
 jobs:
   build:
     name: Build LaTeX document
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Call build workflow
-        uses: ./.github/workflows/build-latex.yaml
-        with:
-          texfile: ${{ env.TEXFILE }}
-          bibfile: ${{ env.BIBFILE }}
-          output_dir: ${{ env.OUTPUT_DIR }}
+    uses: ./.github/workflows/build-latex.yaml
+    with:
+      texfile: ${{ env.TEXFILE }}
+      bibfile: ${{ env.BIBFILE }}
+      output_dir: ${{ env.OUTPUT_DIR }}
 
   deploy:
     needs: [build]
