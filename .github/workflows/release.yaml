@@ -1,11 +1,3 @@
-# Don't use file surnames in the workflow file names.
-env: 
-  TEXFILE: './codern-report'
-  BIBFILE: './bib/codern'
-  OUTPUT_DIR: 'github_artifacts'
-  DEPLOY_DIR: 'github_deploy'
-  DEPLOY_BRANCH: 'build'
-
 name: Release LaTeX document
 on: 
   workflow_dispatch:
@@ -15,14 +7,31 @@ on:
         type: string
         required: true
 
+permissions:
+  contents: write
+  packages: write
+
+env: 
+  TEXFILE: './codern-report'
+  BIBFILE: './bib/codern'
+  OUTPUT_DIR: 'github_artifacts'
+  DEPLOY_DIR: 'github_deploy'
+  DEPLOY_BRANCH: 'build'
+
 jobs:
   build:
     name: Build LaTeX document
-    uses: ./.github/workflows/build-latex.yaml
-    with:
-      texfile: ${{ env.TEXFILE }}
-      bibfile: ${{ env.BIBFILE }}
-      output_dir: ${{ env.OUTPUT_DIR }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Call build workflow
+        uses: ./.github/workflows/build-latex.yaml
+        with:
+          texfile: ${{ env.TEXFILE }}
+          bibfile: ${{ env.BIBFILE }}
+          output_dir: ${{ env.OUTPUT_DIR }}
 
   deploy:
     needs: [build]
@@ -47,7 +56,7 @@ jobs:
           publish_dir: ${{ env.DEPLOY_DIR }}
           publish_branch: ${{ env.DEPLOY_BRANCH}}
           force_orphan: true
-  
+
   release:
     needs: [build]
     runs-on: ubuntu-latest
