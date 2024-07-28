@@ -43,5 +43,5 @@ jobs:
     - name: Upload pdf as artifact
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.TEXFILE }}.pdf
+        name: ${{ github.event.inputs.texfile }}.pdf
         path: ./${{ env.OUTPUT_DIR }}

@@ -2,6 +2,10 @@ name: Release LaTeX document
 on: 
   workflow_dispatch:
     inputs:
+      release_name:
+        description: A version to release
+        type: string
+        required: true
       version:
         description: A version to release
         type: string
@@ -62,17 +66,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: ./${{ env.OUTPUT_DIR }}
       - name: List files
         run: ls -R
       - name: Create release
-        id: create_release
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        uses: marvinpinto/action-automatic-releases@latest
         with:
-          tag_name: ${{ github.event.inputs.version }}
-          release_name: Release ${{ github.event.inputs.version }}
-          body: |
-            Release ${{ github.event.inputs.version }}
-          draft: false
+          repo_token: ${{ secrets.DEPLOY_TOKEN }}
           prerelease: false
+          draft: false
+          automatic_release_tag: ${{ github.event.inputs.version }}
+          title: ${{ github.event.inputs.release_name }} ${{ github.event.inputs.version }}
+          files: |
+            ./${{ env.OUTPUT_DIR }}/*.pdf
