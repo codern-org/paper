@@ -6,26 +6,31 @@ on:
         description: A version to release
         type: string
         required: true
+      texfile:
+        description: Path from repo's root to the LaTeX file (without extension)
+        type: string
+        required: true
+      bibfile:
+        description: Path from repo's root to the BibTeX file (without extension)
+        type: string
+        required: true
 
 permissions:
   contents: write
   packages: write
 
-env: 
-  TEXFILE: './codern-report'
-  BIBFILE: './bib/codern'
-  OUTPUT_DIR: 'github_artifacts'
+env:
   DEPLOY_DIR: 'github_deploy'
   DEPLOY_BRANCH: 'build'
+  OUTPUT_DIR: 'github_artifacts'
 
 jobs:
   build:
     name: Build LaTeX document
     uses: ./.github/workflows/build-latex.yaml
     with:
-      texfile: ${{ env.TEXFILE }}
-      bibfile: ${{ env.BIBFILE }}
-      output_dir: ${{ env.OUTPUT_DIR }}
+      texfile: ${{ github.event.inputs.texfile }}
+      bibfile: ${{ github.event.inputs.bibfile }}
 
   deploy:
     needs: [build]
@@ -63,7 +68,7 @@ jobs:
         id: create_release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         with:
           tag_name: ${{ github.event.inputs.version }}
           release_name: Release ${{ github.event.inputs.version }}
