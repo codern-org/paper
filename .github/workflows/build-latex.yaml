@@ -29,6 +29,8 @@ jobs:
       run: xelatex ${{ github.event.inputs.texfile }}.tex; bibtex ${{ github.event.inputs.bibfile }}.bib;
       # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
       # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
+    - name: List files
+      run: ls -R
     - name: Second compliation
       continue-on-error: true
       run: xelatex ${{ github.event.inputs.texfile }}.tex; xelatex ${{ github.event.inputs.texfile }}.tex;

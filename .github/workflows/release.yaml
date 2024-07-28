@@ -30,7 +30,7 @@ env:
 
 jobs:
   build:
-    name: Build LaTeX document
+    name: Build document
     uses: ./.github/workflows/build-latex.yaml
     with:
       texfile: ${{ github.event.inputs.texfile }}
@@ -81,4 +81,4 @@ jobs:
           automatic_release_tag: ${{ github.event.inputs.version }}
           title: ${{ github.event.inputs.release_name }} ${{ github.event.inputs.version }}
           files: |
-            ./${{ env.OUTPUT_DIR }}/*.pdf
+            ./${{ env.OUTPUT_DIR }}/${{ github.event.inputs.texfile }}.pdf
