@@ -23,13 +23,14 @@ jobs:
     - name: First document compliation
       continue-on-error: true
       run: xelatex ${{ github.event.inputs.texfile }}
-    # If you using biblatex, uncomment the following lines
-    # - name: Bibliography compliation
-    #   continue-on-error: true
-    #   run: biblatex ${{ github.event.inputs.texfile }}
+    # For bibtex
     - name: Bibliography compliation
       continue-on-error: true
-      run: biber ${{ github.event.inputs.texfile }}
+      run: bibtex ${{ github.event.inputs.texfile }}
+    # If you are using biber, uncomment the following lines
+    # - name: Bibliography compliation
+    #   continue-on-error: true
+    #   run: biber ${{ github.event.inputs.texfile }}
     - name: Second document compliation
       continue-on-error: true
       run: xelatex ${{ github.event.inputs.texfile }}; xelatex ${{ github.event.inputs.texfile }};
