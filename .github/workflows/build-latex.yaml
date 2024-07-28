@@ -6,10 +6,6 @@ on:
         description: The main LaTeX file to compile
         type: string
         required: true
-      bibfile:
-        description: The main BibTeX file to compile
-        type: string
-        required: true
 
 env:
   OUTPUT_DIR: 'github_artifacts'
@@ -24,18 +20,19 @@ jobs:
       run: ls -R
     - name: Install LaTeX's dependencies
       run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science texlive-bibtex-extra biber latexmk cm-super
-    - name: First compliation
+    - name: First document compliation
       continue-on-error: true
-      run: xelatex ${{ github.event.inputs.texfile }}.tex; bibtex ${{ github.event.inputs.bibfile }}.bib;
-      # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
-      # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
-    - name: List files
-      run: ls -R
-    - name: Second compliation
+      run: xelatex ${{ github.event.inputs.texfile }}
+    # If you using biblatex, uncomment the following lines
+    # - name: Bibliography compliation
+    #   continue-on-error: true
+    #   run: biblatex ${{ github.event.inputs.texfile }}
+    - name: Bibliography compliation
       continue-on-error: true
-      run: xelatex ${{ github.event.inputs.texfile }}.tex; xelatex ${{ github.event.inputs.texfile }}.tex;
-      # run: latexmk -xelatex -bibtex ${{ env.TEXFILE }}
-      # run: pdflatex ${{ env.TEXFILE }}; bibtex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }}; pdflatex ${{ env.TEXFILE }};
+      run: biber ${{ github.event.inputs.texfile }}
+    - name: Second document compliation
+      continue-on-error: true
+      run: xelatex ${{ github.event.inputs.texfile }}; xelatex ${{ github.event.inputs.texfile }};
     - name: List files
       run: ls -R
     - name: Move pdf to artifacts

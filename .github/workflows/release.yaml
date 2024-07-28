@@ -14,10 +14,6 @@ on:
         description: Name of the main LaTeX file (must be in repo's root; without extension)
         type: string
         required: true
-      bibfile:
-        description: Path from repo's root to the BibTeX file (without extension)
-        type: string
-        required: true
 
 permissions:
   contents: write
@@ -34,7 +30,6 @@ jobs:
     uses: ./.github/workflows/build-latex.yaml
     with:
       texfile: ${{ github.event.inputs.texfile }}
-      bibfile: ${{ github.event.inputs.bibfile }}
 
   deploy:
     needs: [build]
