@@ -23,7 +23,7 @@ jobs:
     - name: List files
       run: ls -R
     - name: Install LaTeX's dependencies
-      run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science latexmk cm-super 
+      run: sudo apt-get update && sudo apt-get install texlive texlive-xetex texlive-publishers texlive-science texlive-bibtex-extra biber latexmk cm-super
     - name: First compliation
       continue-on-error: true
       run: xelatex ${{ github.event.inputs.texfile }}.tex; bibtex ${{ github.event.inputs.bibfile }}.bib;
