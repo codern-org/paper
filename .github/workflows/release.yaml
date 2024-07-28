@@ -14,6 +14,10 @@ on:
         description: Name of the main LaTeX file (must be in repo's root; without extension)
         type: string
         required: true
+      deploy:
+        description: Specifies whether to deploy to GitHub Pages or not (true/false)
+        type: boolean
+        required: true
 
 permissions:
   contents: write
@@ -32,6 +36,7 @@ jobs:
       texfile: ${{ github.event.inputs.texfile }}
 
   deploy:
+    if: ${{ github.event.inputs.deploy == true }}
     needs: [build]
     runs-on: ubuntu-latest
     steps:
