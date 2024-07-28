@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       release_name:
-        description: A version to release
+        description: A name of a release
         type: string
         required: true
       version:
@@ -11,7 +11,7 @@ on:
         type: string
         required: true
       texfile:
-        description: Path from repo's root to the LaTeX file (without extension)
+        description: Name of the main LaTeX file (must be in repo's root; without extension)
         type: string
         required: true
       bibfile:
