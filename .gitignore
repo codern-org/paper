@@ -1,10 +1,12 @@
 # Folders
 example/*
 
-# Local pdf
+# Local PDF
 *.pdf
 
-# Files
+# Output files
+out/*
+output/*
 *.aux
 *.dvi
 *.fdb_latexmk
@@ -14,7 +16,15 @@ example/*
 *.toc
 *.log
 *.lof
+*.lol
 *.lot
+*.xdv
+*.run.xml
+
+# Bibliography
+*.bbl
+*.blg
+*-blx.bib
 
 # Mac
 .DS_Store
