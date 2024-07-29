@@ -37,6 +37,14 @@
         "%DOCFILE%"
       ],
       "env": {}
+    },
+    {
+      "name": "biber",
+      "command": "biber",
+      "args": [
+        "%DOCFILE%"
+      ],
+      "env": {}
     }
   ],
   "latex-workshop.latex.recipes": [
@@ -50,10 +58,28 @@
       ]
     },
     {
+      "name": "Full Compile (Biber)",
+      "tools": [
+        "xelatex",
+        "biber",
+        "xelatex",
+        "xelatex"
+      ]
+    },
+    {
       "name": "Forced Full Compile",
       "tools": [
         "forcexelatex",
         "bibtex",
+        "forcexelatex",
+        "forcexelatex"
+      ]
+    },
+    {
+      "name": "Forced Full Compile (Biber)",
+      "tools": [
+        "forcexelatex",
+        "biber",
         "forcexelatex",
         "forcexelatex"
       ]

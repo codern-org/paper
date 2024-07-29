@@ -25,6 +25,7 @@ output/*
 *.bbl
 *.blg
 *-blx.bib
+*.bcf
 
 # Mac
 .DS_Store
