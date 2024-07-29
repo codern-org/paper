@@ -1,0 +1,52 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit"
+  },
+
+  "latex-workshop.latex.tools": [
+  {
+    "name": "xelatex",
+    "command": "latexmk",
+    "args": [
+      "-xelatex",
+      "-synctex=1",
+      "-interaction=nonstopmode",
+      "-file-line-error",
+      "%DOC%"
+    ],
+    "env": {}
+  },
+  {
+    "name": "bibtex",
+    "command": "bibtex",
+    "args": [
+      "%DOCFILE%"
+    ],
+    "env": {}
+  }
+  ],
+  "latex-workshop.latex.recipes": [
+  {
+    "name": "Full Compile",
+    "tools": [
+      "xelatex",
+      "bibtex",
+      "xelatex",
+      "xelatex"
+    ]
+  },
+  {
+    "name": "Fast Compile",
+    "tools": [
+      "xelatex"
+    ]
+  },
+  ],
+
+  "latex-workshop.latex.recipe.default": "Fast Compile",
+  "latex-workshop.latex.autoBuild.run": "never", // Mode: "onFileChange" | "onSave" | "onBuild"
+  "latex-workshop.latex.autoBuild.interval": 10000,
+  "latex-workshop.synctex.afterBuild.enabled": true,
+  "latex-workshop.view.pdf.viewer": "tab",
+}

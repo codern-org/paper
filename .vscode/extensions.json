@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+        // Latex support
+        "James-Yu.latex-workshop",
+
+        // Improve highlighting of errors, warnings and other language diagnostics.
+        "usernamehw.errorlens",
+        // Improve your code commenting by annotating with alert, informational, TODOs, and more!
+        "aaron-bond.better-comments",
+        // Enforce Editor config
+        "EditorConfig.EditorConfig",
+  ],
+  "unwantedRecommendations": [
+    "mathematic.vscode-latex",
+  ]
+}
