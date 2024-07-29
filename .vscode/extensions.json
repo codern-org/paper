@@ -1,14 +1,17 @@
 {
   "recommendations": [
-        // Latex support
-        "James-Yu.latex-workshop",
-
-        // Improve highlighting of errors, warnings and other language diagnostics.
-        "usernamehw.errorlens",
-        // Improve your code commenting by annotating with alert, informational, TODOs, and more!
-        "aaron-bond.better-comments",
-        // Enforce Editor config
-        "EditorConfig.EditorConfig",
+    // Latex support
+    "James-Yu.latex-workshop",
+    // Errors, warnings and other language diagnostics.
+    "usernamehw.errorlens",
+    // Better code commenting by annotating with alert, informational, TODOs, and more!
+    "aaron-bond.better-comments",
+    // Enforce EditorConfig settings from .editorconfig files.
+    "EditorConfig.EditorConfig",
+    // Git Graph
+    "mhutchie.git-graph",
+    // Icons for Visual Studio Code
+    "vscode-icons-team.vscode-icons",
   ],
   "unwantedRecommendations": [
     "mathematic.vscode-latex",
