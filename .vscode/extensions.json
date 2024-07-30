@@ -12,6 +12,8 @@
     "mhutchie.git-graph",
     // Icons for Visual Studio Code
     "vscode-icons-team.vscode-icons",
+    // Dev Container
+    "ms-vscode-remote.remote-containers",
   ],
   "unwantedRecommendations": [
     "mathematic.vscode-latex",
